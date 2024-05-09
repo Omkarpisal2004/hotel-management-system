@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Handler</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #a07979;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-book,
+        .btn-payment {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-book {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .btn-book:hover {
+            background-color: #218838;
+        }
+        .btn-payment {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-payment:hover {
+            background-color: #0056b3;
+        }
+        #img{
+            background-repeat: no-repeat;
+            position: fixed;
+            z-index: -1;
+            height: 1500px;
+            width: 1500px;
+
+        }
+    </style>
+</head>
+<body>
+    <img  id="img" src="./login.webp" alt="">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Hotel Management System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hotel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Photos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Your Section</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Booking Details for <span id="hotelName"></span></h1>
+        <form action="confirmation.php" method="post">
+            <div class="form-group">
+                <label for="numberOfPeople">Number of People</label>
+                <input type="number" id="numberOfPeople" name="numberOfPeople" class="form-control" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="menuPreference">Menu Preference</label>
+                <select id="menuPreference" name="menuPreference" class="form-control">
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="non-vegetarian">Non-Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <div>
+                    <label><input type="radio" name="paymentMethod" value="online"> Pay Online</label>
+                </div>
+                <div>
+                    <label><input type="radio" name="paymentMethod" value="offline"> Pay Offline</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-book">Book Table</button>
+            <button type="button" class="btn btn-payment" onclick="makePayment()">Make Payment</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/\[\]\]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Retrieve hotel name from URL parameter
+        var hotelName = getParameterByName('hotel');
+
+        // Display hotel name
+        document.getElementById('hotelName').innerText = hotelName;
+
+        // Function to handle payment
+        function makePayment() {
+            var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            if (!paymentMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
+            if (paymentMethod.value === 'online') {
+                alert('Redirecting to online payment gateway...');
+                // Perform redirection to online payment gateway
+            } else if (paymentMethod.value === 'offline') {
+                alert('Please proceed with offline payment.');
+                // Perform actions for offline payment
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
